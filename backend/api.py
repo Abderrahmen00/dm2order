@@ -5,16 +5,19 @@ from fastapi.responses import StreamingResponse
 from io import BytesIO
 from fastapi import UploadFile, File
 from google.genai import errors as genai_errors
+import os
 
 from .pdf_generator import generate_delivery_slip
 from .extractor import extract_order, extract_order_from_image, ExtractedOrder
 
 app = FastAPI(title="DM2Order API", version="0.1.0")
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "*")
+
 # Allow the frontend (running on a different port) to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[FRONTEND_URL] if FRONTEND_URL != "*" else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

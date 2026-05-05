@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: dm2order-api
+    runtime: python
+    plan: free
+    buildCommand: pip install uv && uv sync
+    startCommand: uv run uvicorn backend.api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
