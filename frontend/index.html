@@ -238,9 +238,10 @@
 
     <!-- ===== JavaScript ===== -->
     <script>
-        const API_URL = "http://localhost:8000/api/extract";
-        const IMAGE_API_URL = "http://localhost:8000/api/extract-image";
-        const PDF_API_URL = "http://localhost:8000/api/delivery-slip";
+        const API_BASE = "https://dm2order-api.onrender.com";  
+        const API_URL = `${API_BASE}/api/extract`;
+        const IMAGE_API_URL = `${API_BASE}/api/extract-image`;
+        const PDF_API_URL = `${API_BASE}/api/delivery-slip`;
 
         const messageInput = document.getElementById("message");
         const extractBtn = document.getElementById("extractBtn");
