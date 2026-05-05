@@ -1,0 +1,220 @@
+/* --- 1. Typography & font stack --- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+    /* Custom brand colors — easier to tweak than digging through Tailwind */
+    --brand: #4f46e5;
+    --brand-dark: #4338ca;
+    --brand-light: #818cf8;
+}
+
+html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    /* These OpenType features unlock Inter's prettier letterforms */
+}
+
+/* Headline letter-spacing — pro typography always tightens big text */
+h1, h2 {
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    letter-spacing: -0.03em;
+}
+
+
+/* --- 2. Smooth scrolling for anchor links --- */
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Accounts for sticky nav */
+}
+
+
+/* --- 3. Gradient text utilities --- */
+
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Slight padding fixes descender clipping bug in Chrome */
+    padding-bottom: 0.05em;
+}
+
+
+/* --- 4. Refined hero grid background --- */
+
+.hero-grid {
+    background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    /* Radial mask fades the grid toward the edges — looks way better than a hard edge */
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 40%, transparent 100%);
+}
+
+
+/* --- 5. Animations --- */
+
+/* Fade up on load */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-up-delay-1 { animation: fadeUp 0.7s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-up-delay-2 { animation: fadeUp 0.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-up-delay-3 { animation: fadeUp 0.7s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Subtle pulse for the "live" dot */
+@keyframes softPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.animate-soft-pulse {
+    animation: softPulse 2s ease-in-out infinite;
+}
+
+/* Gradient orb ambient drift — for the dark CTA section */
+@keyframes orbDrift {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -20px); }
+    66% { transform: translate(-20px, 25px); }
+}
+
+.animate-orb {
+    animation: orbDrift 18s ease-in-out infinite;
+}
+
+.animate-orb-delayed {
+    animation: orbDrift 18s ease-in-out -9s infinite;
+}
+
+
+/* --- 6. Refined button micro-interactions --- */
+
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    transition-duration: 0.1s;
+}
+
+/* Shimmer effect on hover — subtle but very premium-feeling */
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+
+/* --- 7. Focus rings — accessibility + polish --- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+
+/* --- 8. Selection color --- */
+
+::selection {
+    background: rgba(99, 102, 241, 0.2);
+    color: rgb(15, 23, 42);
+}
+
+
+/* --- 9. Reduced motion support — accessibility --- */
+
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* --- 10. Custom scrollbar --- */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(248, 250, 252);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(203, 213, 225);
+    border-radius: 6px;
+    border: 3px solid rgb(248, 250, 252);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(148, 163, 184);
+}
+
+
+/* --- 11. Print styles — when sellers print the delivery slip from the result card --- */
+
+@media print {
+    nav, footer, #waitlist, .btn-primary {
+        display: none !important;
+    }
+}
